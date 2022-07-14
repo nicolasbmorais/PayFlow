@@ -17,15 +17,12 @@ class LoginController with ChangeNotifier {
       final user =
           UserModel(name: response!.displayName!, photoURL: response.photoUrl);
       authController.setUser(context, user);
-      print(response);
       notifyListeners();
     } catch (error) {
       authController.setUser(context, null);
-      print(error);
       notifyListeners();
+      //TODO: adicionar widget para exibir mensagem de erro no login
     }
     notifyListeners();
   }
-
-  
 }

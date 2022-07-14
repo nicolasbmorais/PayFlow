@@ -10,6 +10,7 @@ import 'package:payflow/modules/login/pages/login_page.dart';
 import 'package:payflow/modules/splash/splash_page.dart';
 import 'package:payflow/shared/auth/auth_controller.dart';
 import 'package:payflow/shared/themes/app_color.dart';
+import 'package:payflow/shared/widget/bank_slip_list/bank_slip_list_controller.dart';
 import 'package:provider/provider.dart';
 import 'modules/login/controller/login_controller.dart';
 
@@ -19,7 +20,7 @@ void main() {
 }
 
 class MainPage extends StatelessWidget {
-  MainPage() {
+  MainPage({Key? key}) : super(key: key) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -31,15 +32,18 @@ class MainPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginController>(
-            create: (context) => LoginController(),),
+          create: (context) => LoginController(),
+        ),
         ChangeNotifierProvider<AuthController>(
             create: (context) => AuthController()),
         ChangeNotifierProvider<HomeController>(
             create: (context) => HomeController()),
         ChangeNotifierProvider<BarcodeScannerController>(
             create: (context) => BarcodeScannerController()),
-                    ChangeNotifierProvider<InsertBankSlipController>(
+        ChangeNotifierProvider<InsertBankSlipController>(
             create: (context) => InsertBankSlipController()),
+        ChangeNotifierProvider<BankListController>(
+            create: (context) => BankListController()),
       ],
       child: MaterialApp(
         title: 'Pay Flow',
@@ -50,11 +54,11 @@ class MainPage extends StatelessWidget {
         ),
         initialRoute: '/splash',
         routes: {
-          '/splash': (context) => SplashScreen(),
-          '/login': (context) => LoginPage(),
-          '/home': (context) => HomePage(),
-          '/barcode': (context) => BarcodeScannerPage(),
-          '/insert_boleto': (context) => InsertBankSlipPage()
+          '/splash': (context) => const SplashScreen(),
+          '/login': (context) => const LoginPage(),
+          '/home': (context) => const HomePage(),
+          '/barcode': (context) => const BarcodeScannerPage(),
+          '/insert_boleto': (context) => const InsertBankSlipPage()
         },
       ),
     );

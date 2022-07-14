@@ -5,7 +5,7 @@ import 'package:payflow/shared/themes/app_text_style.dart';
 
 class LoginButton extends StatelessWidget {
   final VoidCallback onTap;
-   LoginButton({Key? key, required this.onTap}) : super(key: key);
+  const LoginButton({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,8 @@ class LoginButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.shape,
           borderRadius: BorderRadius.circular(5),
-          border: Border.fromBorderSide(BorderSide(color: AppColors.stroke)),
+          border:
+              const Border.fromBorderSide(BorderSide(color: AppColors.stroke)),
         ),
         height: 56,
         child: Row(
@@ -26,7 +27,7 @@ class LoginButton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(AppImages.google),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Container(
                       color: AppColors.stroke,
                       width: 1,

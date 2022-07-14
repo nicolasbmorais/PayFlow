@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payflow/shared/models/bank_slip.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InsertBankSlipController with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -7,20 +8,22 @@ class InsertBankSlipController with ChangeNotifier {
   BankSlipModel bankSlipModel = BankSlipModel();
 
   String? validateName(String? value) =>
-      value?.isEmpty ?? true ? 'O nome não pode ser vazio' : null;
-  String? validateDate(String? value) => value?.isEmpty ?? true
+      value!.isEmpty ? 'O nome não pode ser vazio' : null;
+
+  String? validateDate(String? value) => value!.isEmpty
       ? 'A data de vencimento não pode ser vazia'
       : null; //TODO: Depois alterar para validação de datas válidas e todos os outros dados
+
   String? validateValue(double? value) =>
       value == 0 ? 'Insira um valor maior que "R\$ 0,00' : null;
+
   String? validateBarcode(String? value) =>
-      value?.isEmpty ?? true ? 'O código do boleto não pode ser vazio' : null;
-  //TODO: Testar e ver se preciso por notify e fazer get
+      value!.isEmpty ? 'O código do boleto não pode ser vazio' : null;
 
   void onChange({
     String? name,
-    dueDate,
-    barcode,
+    String? dueDate,
+    String? barcode,
     double? value,
   }) {
     bankSlipModel = bankSlipModel.copyWith(
@@ -31,13 +34,19 @@ class InsertBankSlipController with ChangeNotifier {
     );
   }
 
-  void saveBankSlip() {}
+  Future<void> saveBankSlip() async {
+    final instance = await SharedPreferences.getInstance();
+    final bankSlip = instance.getStringList('bankSlip') ?? <String>[];
+    bankSlip.add(bankSlipModel.toJson());
+    await instance.setStringList('bankSlip', bankSlip);
+    notifyListeners();
+    return;
+  }
 
-  void registerBankSlip() {
+  Future<void> registerBankSlip() async {
     final form = formKey.currentState;
     if (form!.validate()) {
-      print(bankSlipModel);
-      notifyListeners();
+      return saveBankSlip();
     }
     notifyListeners();
   }

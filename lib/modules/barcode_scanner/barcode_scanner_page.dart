@@ -20,9 +20,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
       final barcodeController = context.read<BarcodeScannerController>();
       barcodeController.getAvailableCameras();
       barcodeController.addListener(() {
-        if (barcodeController.status.hasBarcode) {
+        if (barcodeController.statusNotifier.hasBarcode) {
           Navigator.pushReplacementNamed(context, '/insert_boleto',
-              arguments: barcodeController.status.barcode);
+              arguments: barcodeController.statusNotifier.barcode);
         }
       });
     });
@@ -44,7 +44,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
         return SafeArea(
           child: Stack(
             children: [
-              barcodeScannerController.status.showCamera
+              barcodeScannerController.statusNotifier.showCamera
                   ? Container(
                       child: barcodeScannerController.cameraController!
                           .buildPreview(),
@@ -53,45 +53,46 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               RotatedBox(
                 quarterTurns: 1,
                 child: Scaffold(
-                    backgroundColor: Colors.transparent,
-                    appBar: AppBar(
-                      backgroundColor: Colors.black,
-                      title: Text(
-                        "Escaneie o código de barras do boleto",
-                        style: TextStyles.buttonBackground,
-                      ),
-                      centerTitle: true,
-                      leading: BackButton(
-                        color: AppColors.background,
-                      ),
+                  backgroundColor: Colors.transparent,
+                  appBar: AppBar(
+                    backgroundColor: Colors.black,
+                    title: Text(
+                      "Escaneie o código de barras do boleto",
+                      style: TextStyles.buttonBackground,
                     ),
-                    body: Column(
-                      children: [
-                        Expanded(
-                            child: Container(
-                          color: Colors.black.withOpacity(0.6),
-                        )),
-                        Expanded(
-                            flex: 2,
-                            child: Container(
-                              color: Colors.transparent,
-                            )),
-                        Expanded(
-                            child: Container(
-                          color: Colors.black.withOpacity(0.6),
-                        ))
-                      ],
+                    centerTitle: true,
+                    leading: const BackButton(
+                      color: AppColors.background,
                     ),
-                    bottomNavigationBar: SetLabelButtons(
-                        primaryLabel: "Inserir código do boleto",
-                        primaryOnPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, "/insert_boleto");
-                        },
-                        secondaryLabel: "Adicionar da galeria",
-                        secondaryOnPressed: () {})),
+                  ),
+                  body: Column(
+                    children: [
+                      Expanded(
+                          child: Container(
+                        color: Colors.black.withOpacity(0.6),
+                      )),
+                      Expanded(
+                          flex: 2,
+                          child: Container(
+                            color: Colors.transparent,
+                          )),
+                      Expanded(
+                          child: Container(
+                        color: Colors.black.withOpacity(0.6),
+                      ))
+                    ],
+                  ),
+                  bottomNavigationBar: SetLabelButtons(
+                      primaryLabel: "Inserir código do boleto",
+                      primaryOnPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, "/insert_boleto");
+                      },
+                      secondaryLabel: "Adicionar da galeria",
+                      secondaryOnPressed: () {}),
+                ),
               ),
-              barcodeScannerController.status.hasError
+              barcodeScannerController.statusNotifier.hasError
                   ? BottomSheetWidget(
                       title:
                           "Não foi possível identificar um código de barras.",

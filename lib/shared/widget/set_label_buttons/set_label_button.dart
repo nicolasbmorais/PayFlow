@@ -30,12 +30,12 @@ class SetLabelButtons extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Divider(
+          const Divider(
             thickness: 1,
             height: 1,
             color: AppColors.stroke,
           ),
-          Container(
+          SizedBox(
             height: 56,
             child: Row(
               children: [
@@ -46,12 +46,13 @@ class SetLabelButtons extends StatelessWidget {
                     style: enablePrimaryColor ? TextStyles.buttonPrimary : null,
                   ),
                 ),
-                DividerVerticalWidget(),
+                const DividerVerticalWidget(),
                 Expanded(
                   child: LabelButton(
                     label: secondaryLabel,
                     onPressed: secondaryOnPressed,
-                    style: enableSecondaryColor ? TextStyles.buttonPrimary : null,
+                    style:
+                        enableSecondaryColor ? TextStyles.buttonPrimary : null,
                   ),
                 )
               ],

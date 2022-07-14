@@ -7,7 +7,7 @@ import 'package:payflow/shared/widget/login_button/login_button.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,11 +17,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Consumer<LoginController>(
-        builder: (BuildContext context, LoginController loginController, child) {
+    return Consumer<LoginController>(builder:
+        (BuildContext context, LoginController loginController, child) {
       return Scaffold(
         backgroundColor: AppColors.background,
-        body: Container(
+        body: SizedBox(
           height: size.height,
           width: size.width,
           child: Stack(
@@ -50,11 +50,12 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(),
+                      padding: const EdgeInsets.only(),
                       child: Image.asset(AppImages.logomini),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 70, right: 70, top: 10),
+                      padding:
+                          const EdgeInsets.only(left: 70, right: 70, top: 10),
                       child: Text(
                         "Organize seus boletos em um só lugar",
                         style: TextStyles.titleHome,
@@ -67,7 +68,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: LoginButton(
                         onTap: () async {
                           loginController.signIn(context);
-                         
                         },
                       ),
                     )

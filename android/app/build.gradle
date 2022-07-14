@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 31    
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,9 +46,18 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.payflow"
         minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    signingConfigs {
+        debug {
+        storeFile file("debug.keystore")
+        storePassword "android"
+        keyAlias "androiddebugkey"
+        keyPassword "android"
+        }
     }
 
     buildTypes {
@@ -66,6 +75,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:29.3.0')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
 }

@@ -36,7 +36,7 @@ class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
           appBar: AppBar(
             backgroundColor: AppColors.background,
             elevation: 0,
-            leading: BackButton(color: AppColors.input),
+            leading: const BackButton(color: AppColors.input),
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -56,67 +56,69 @@ class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
                     ),
                   ),
                   Form(
+                      key: insertBankSlipController.formKey,
                       child: Column(
-                    children: [
-                      InputTextWidget(
-                        keyboardType: TextInputType.name,
-                        validator: insertBankSlipController.validateName,
-                        icon: FontAwesomeIcons.fileLines,
-                        label: 'Nome do boleto',
-                        onChanged: (value) {
-                          insertBankSlipController.onChange(name: value);
-                        },
-                      ),
-                      InputTextWidget(
-                        keyboardType: TextInputType.datetime,
-                        validator: insertBankSlipController.validateDate,
-                        controller: MaskFormatter.dueDateTextController,
-                        icon: FontAwesomeIcons.circleXmark,
-                        label: 'Vencimento',
-                        onChanged: (value) {
-                          insertBankSlipController.onChange(dueDate: value);
-                        },
-                      ),
-                      InputTextWidget(
-                        keyboardType: TextInputType.number,
-                        controller: MaskFormatter.moneyTextController,
-                        label: 'Valor',
-                        icon: FontAwesomeIcons.wallet,
-                        validator: (_) =>
-                            insertBankSlipController.validateValue(
-                                MaskFormatter.moneyTextController.numberValue),
-                        onChanged: (value) {
-                          insertBankSlipController.onChange(
-                              value: MaskFormatter
-                                  .moneyTextController.numberValue);
-                        },
-                      ),
-                      InputTextWidget(
-                        keyboardType: TextInputType.number,
-                        validator: insertBankSlipController.validateBarcode,
-                        controller: barcodeTextController,
-                        icon: FontAwesomeIcons.barcode,
-                        label: 'Código',
-                        onChanged: (value) {
-                          insertBankSlipController.onChange(barcode: value);
-                        },
-                      ),
-                    ],
-                  ))
+                        children: [
+                          InputTextWidget(
+                            keyboardType: TextInputType.name,
+                            validator: insertBankSlipController.validateName,
+                            icon: FontAwesomeIcons.fileLines,
+                            label: 'Nome do boleto',
+                            onChanged: (value) {
+                              insertBankSlipController.onChange(name: value);
+                            },
+                          ),
+                          InputTextWidget(
+                            keyboardType: TextInputType.datetime,
+                            validator: insertBankSlipController.validateDate,
+                            controller: MaskFormatter.dueDateTextController,
+                            icon: FontAwesomeIcons.circleXmark,
+                            label: 'Vencimento',
+                            onChanged: (value) {
+                              insertBankSlipController.onChange(dueDate: value);
+                            },
+                          ),
+                          InputTextWidget(
+                            keyboardType: TextInputType.number,
+                            controller: MaskFormatter.moneyTextController,
+                            label: 'Valor',
+                            icon: FontAwesomeIcons.wallet,
+                            validator: (_) => insertBankSlipController
+                                .validateValue(MaskFormatter
+                                    .moneyTextController.numberValue),
+                            onChanged: (value) {
+                              insertBankSlipController.onChange(
+                                  value: MaskFormatter
+                                      .moneyTextController.numberValue);
+                            },
+                          ),
+                          InputTextWidget(
+                            keyboardType: TextInputType.number,
+                            validator: insertBankSlipController.validateBarcode,
+                            controller: barcodeTextController,
+                            icon: FontAwesomeIcons.barcode,
+                            label: 'Código',
+                            onChanged: (value) {
+                              insertBankSlipController.onChange(barcode: value);
+                            },
+                          ),
+                        ],
+                      ))
                 ],
               ),
             ),
           ),
           bottomNavigationBar: SetLabelButtons(
             primaryLabel: 'Cancelar',
+            secondaryLabel: 'Cadastrar',
+            enableSecondaryColor: true,
             primaryOnPressed: () {
               Navigator.pop(context);
             },
-            secondaryLabel: 'Cadastrar',
-            secondaryOnPressed: () {
-              insertBankSlipController.registerBankSlip();
+            secondaryOnPressed: () async {
+              await insertBankSlipController.registerBankSlip();
+              Navigator.pop(context);
             },
-            enableSecondaryColor: true,
           ));
     });
   }
