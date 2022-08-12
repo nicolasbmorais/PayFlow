@@ -13,50 +13,54 @@ class MyBankSlipPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
         builder: (context, BankListController bankListController, child) {
-      return Column(
-        children: [
-          Stack(
+      return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              Container(
-                width: double.maxFinite,
-                height: 40,
-                color: AppColors.primary,
+              Stack(
+                children: [
+                  Container(
+                    width: double.maxFinite,
+                    height: 40,
+                    color: AppColors.primary,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: BankSlipInfoWidget(
+                        size: bankListController.bankSlip.length),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: BankSlipInfoWidget(
-                    size: bankListController.bankSlip.length),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Meus Boletos",
+                            style: TextStyles.titleBoldHeading,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 24),
+                      child: Divider(
+                        thickness: 1,
+                        height: 1,
+                        color: AppColors.stroke,
+                      ),
+                    ),
+                    const BankSlipListWidget()
+                  ],
+                ),
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 24),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Meus Boletos",
-                        style: TextStyles.titleBoldHeading,
-                      ),
-                    ],
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
-                  child: Divider(
-                    thickness: 1,
-                    height: 1,
-                    color: AppColors.stroke,
-                  ),
-                ),
-                const BankSlipListWidget()
-              ],
-            ),
-          ),
-        ],
+        ),
       );
     });
   }

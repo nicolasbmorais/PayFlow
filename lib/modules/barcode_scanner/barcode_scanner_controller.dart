@@ -2,15 +2,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:payflow/modules/barcode_scanner/barcode_scanner_status.dart';
 
 class BarcodeScannerController with ChangeNotifier {
   BarcodeScannerStatus statusNotifier = BarcodeScannerStatus();
 
   final barcodeScanner = GoogleMlKit.vision.barcodeScanner();
-
-  InputImage? imagePicker;
 
   CameraController? cameraController;
 
@@ -53,16 +50,9 @@ class BarcodeScannerController with ChangeNotifier {
     notifyListeners();
   }
 
-  void scanWithImagePicker() async {
-    final response = await ImagePicker().pickImage(source: ImageSource.gallery);
-    final inputImage = InputImage.fromFilePath(response!.path);
-    scannerBarCode(inputImage);
-    notifyListeners();
-  }
-
   void scanWithCamera() {
     statusNotifier = BarcodeScannerStatus.available();
-    Future.delayed(Duration(seconds: 25)).then((value) {
+    Future.delayed(const Duration(seconds: 25)).then((value) {
       if (statusNotifier.hasBarcode == false) {
         statusNotifier =
             BarcodeScannerStatus.error("Tempo esgotado na leitura do boleto");

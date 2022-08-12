@@ -9,6 +9,7 @@ import 'package:payflow/modules/insert_bank_slip/insert_bank_slip_controller.dar
 import 'package:payflow/modules/login/pages/login_page.dart';
 import 'package:payflow/modules/splash/splash_page.dart';
 import 'package:payflow/shared/auth/auth_controller.dart';
+import 'package:payflow/shared/models/user.dart';
 import 'package:payflow/shared/themes/app_color.dart';
 import 'package:payflow/shared/widget/bank_slip_list/bank_slip_list_controller.dart';
 import 'package:provider/provider.dart';
@@ -56,9 +57,13 @@ class MainPage extends StatelessWidget {
         routes: {
           '/splash': (context) => const SplashScreen(),
           '/login': (context) => const LoginPage(),
-          '/home': (context) => const HomePage(),
           '/barcode': (context) => const BarcodeScannerPage(),
-          '/insert_boleto': (context) => const InsertBankSlipPage()
+          '/insert_boleto': (context) => InsertBankSlipPage(
+              barcode: ModalRoute.of(context) != null
+                  ? ModalRoute.of(context)!.settings.arguments.toString()
+                  : null),
+          '/home': (context) => HomePage(
+              user: ModalRoute.of(context)!.settings.arguments as UserModel),
         },
       ),
     );

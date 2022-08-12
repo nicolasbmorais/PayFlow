@@ -43,10 +43,11 @@ class InsertBankSlipController with ChangeNotifier {
     return;
   }
 
-  Future<void> registerBankSlip() async {
+  Future<void> registerBankSlip(BuildContext context) async {
     final form = formKey.currentState;
     if (form!.validate()) {
-      return saveBankSlip();
+      await saveBankSlip();
+      Navigator.pop(context);
     }
     notifyListeners();
   }

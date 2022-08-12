@@ -15,20 +15,6 @@ class ExtractPage extends StatelessWidget {
         builder: (context, BankListController bankListController, child) {
       return Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                width: double.maxFinite,
-                height: 40,
-                color: AppColors.primary,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: BankSlipInfoWidget(
-                    size: bankListController.bankSlip.length),
-              ),
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -38,7 +24,7 @@ class ExtractPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        "Meus Boletos",
+                        "Meus extratos",
                         style: TextStyles.titleBoldHeading,
                       ),
                     ],

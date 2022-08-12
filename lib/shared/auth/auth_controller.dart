@@ -6,7 +6,7 @@ class AuthController with ChangeNotifier {
   void setUser(BuildContext context, var user) {
     if (user != null) {
       saveUser(user);
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/home', arguments: user);
       notifyListeners();
     } else {
       Navigator.pushReplacementNamed(context, '/login');

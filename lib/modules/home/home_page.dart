@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:payflow/modules/extract_page/extract_page.dart';
 import 'package:payflow/modules/home/home_controller.dart';
 import 'package:payflow/modules/my_bank_slip/my_bank_slip.dart';
+import 'package:payflow/shared/models/user.dart';
 import 'package:payflow/shared/themes/app_color.dart';
 import 'package:payflow/shared/themes/app_text_style.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final UserModel user;
+  const HomePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyles.titleRegular,
                       children: [
                         TextSpan(
-                          text: 'Nícolas',
+                          text: widget.user.name,
                           style: TextStyles.titleBoldBackground,
                         ),
                       ]),
@@ -45,15 +47,22 @@ class _HomePageState extends State<HomePage> {
                   height: 48,
                   width: 48,
                   decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(5),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.user.photoURL!))),
                 ),
               ),
             ),
           ),
         ),
-        body: pages[homeController.currentPage],
+        body: homeController.currentPage == 0
+            ? MyBankSlipPage(
+                key: UniqueKey(),
+              )
+            : ExtractPage(
+                key: UniqueKey(),
+              ),
         bottomNavigationBar: SizedBox(
             height: 90,
             child: Row(
@@ -70,21 +79,18 @@ class _HomePageState extends State<HomePage> {
                     homeController.setpage(0);
                   },
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/insert_boleto'),
-
-                  // Navigator.pushNamed(context, '/barcode'),
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Icon(
-                      Icons.add_box_outlined,
+                Container(
+                  height: 56,
+                  width: 56,
+                  decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: IconButton(
                       color: AppColors.background,
-                    ),
-                  ),
+                      icon: const Icon(Icons.add_box_outlined),
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, '/barcode');
+                      }),
                 ),
                 IconButton(
                   icon: Icon(
@@ -102,9 +108,4 @@ class _HomePageState extends State<HomePage> {
       );
     });
   }
-
-  final pages = [
-    const MyBankSlipPage(),
-    const ExtractPage(),
-  ];
 }

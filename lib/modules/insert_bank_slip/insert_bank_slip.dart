@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:payflow/modules/insert_bank_slip/insert_bank_slip_controller.dart';
 import 'package:payflow/shared/themes/app_color.dart';
 import 'package:payflow/shared/themes/app_text_style.dart';
 import 'package:payflow/shared/widget/input_text/input_text_widgets.dart';
-import 'package:payflow/shared/widget/input_text/mask_formatter.dart';
 import 'package:payflow/shared/widget/set_label_buttons/set_label_button.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +18,9 @@ class InsertBankSlipPage extends StatefulWidget {
 
 class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
   final barcodeTextController = TextEditingController();
+  final dueDateTextController = MaskedTextController(mask: '00/00/0000');
+  final moneyTextController =
+      MoneyMaskedTextController(leftSymbol: 'R\$', decimalSeparator: ',');
 
   @override
   void initState() {
@@ -71,7 +74,7 @@ class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
                           InputTextWidget(
                             keyboardType: TextInputType.datetime,
                             validator: insertBankSlipController.validateDate,
-                            controller: MaskFormatter.dueDateTextController,
+                            controller: dueDateTextController,
                             icon: FontAwesomeIcons.circleXmark,
                             label: 'Vencimento',
                             onChanged: (value) {
@@ -80,16 +83,14 @@ class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
                           ),
                           InputTextWidget(
                             keyboardType: TextInputType.number,
-                            controller: MaskFormatter.moneyTextController,
+                            controller: moneyTextController,
                             label: 'Valor',
                             icon: FontAwesomeIcons.wallet,
                             validator: (_) => insertBankSlipController
-                                .validateValue(MaskFormatter
-                                    .moneyTextController.numberValue),
+                                .validateValue(moneyTextController.numberValue),
                             onChanged: (value) {
                               insertBankSlipController.onChange(
-                                  value: MaskFormatter
-                                      .moneyTextController.numberValue);
+                                  value: moneyTextController.numberValue);
                             },
                           ),
                           InputTextWidget(
@@ -112,12 +113,11 @@ class _InsertBankSlipPageState extends State<InsertBankSlipPage> {
             primaryLabel: 'Cancelar',
             secondaryLabel: 'Cadastrar',
             enableSecondaryColor: true,
-            primaryOnPressed: () {
+            primaryOnPressed: () async {
               Navigator.pop(context);
             },
             secondaryOnPressed: () async {
-              await insertBankSlipController.registerBankSlip();
-              Navigator.pop(context);
+              await insertBankSlipController.registerBankSlip(context);
             },
           ));
     });
