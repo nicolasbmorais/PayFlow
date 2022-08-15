@@ -1,6 +1,6 @@
 name: payflow
 description: A new Flutter project.
-
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -12,18 +12,8 @@ dependencies:
     sdk: flutter
 
 
-  cupertino_icons: ^1.0.2
-  google_fonts: 2.2.0 
-  firebase_core: ^1.12.0
-  google_sign_in: ^5.3.1
-  shared_preferences: ^2.0.13
-  provider: ^6.0.2
-  google_ml_kit: ^0.11.0
-  camera: ^0.9.6
-  image_picker: ^0.8.5+3
-  font_awesome_flutter: ^10.1.0
-  flutter_masked_text2: ^0.9.1
-  mobile_scanner: ^1.1.2
+  common:
+    path: common
 
 dev_dependencies:
   flutter_test:
@@ -32,12 +22,9 @@ dev_dependencies:
   
     
 flutter:
-
   uses-material-design: true
-  
   assets:
-    - assets/images/
-  #   - images/a_dot_ham.jpeg
+    - common/assets/
 
   # fonts:
   #   - family: Schyler

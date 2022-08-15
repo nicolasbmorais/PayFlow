@@ -1,19 +1,18 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:payflow/modules/barcode_scanner/barcode_scanner_controller.dart';
-import 'package:payflow/modules/barcode_scanner/barcode_scanner_page.dart';
-import 'package:payflow/modules/home/home_controller.dart';
-import 'package:payflow/modules/home/home_page.dart';
-import 'package:payflow/modules/insert_bank_slip/insert_bank_slip.dart';
-import 'package:payflow/modules/insert_bank_slip/insert_bank_slip_controller.dart';
-import 'package:payflow/modules/login/pages/login_page.dart';
-import 'package:payflow/modules/splash/splash_page.dart';
-import 'package:payflow/shared/auth/auth_controller.dart';
-import 'package:payflow/shared/models/user.dart';
-import 'package:payflow/shared/themes/app_color.dart';
-import 'package:payflow/shared/widget/bank_slip_list/bank_slip_list_controller.dart';
-import 'package:provider/provider.dart';
-import 'modules/login/controller/login_controller.dart';
+import 'package:payflow/controller/bank_slip_list_controller.dart';
+import 'package:payflow/model/user.dart';
+import 'package:payflow/controller/barcode_scanner_controller.dart';
+import 'package:payflow/controller/home_controller.dart';
+import 'package:payflow/controller/insert_bank_slip_controller.dart';
+import 'package:payflow/controller/auth_controller.dart';
+import 'package:payflow/view/barcode_scanner/barcode_scanner_page.dart';
+import 'package:payflow/view/home/home_page.dart';
+import 'package:payflow/view/insert_bank_slip/insert_bank_slip.dart';
+import 'package:payflow/view/login/login_page.dart';
+import 'package:payflow/view/splash/splash_page.dart';
+import 'controller/login_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
